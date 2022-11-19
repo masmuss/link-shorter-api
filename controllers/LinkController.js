@@ -13,17 +13,20 @@ export const getAll = async (req, res) => {
 export const create = async (req, res) => {
 	const link = req.body
 	const newLink = new Link(link)
-   try {
-      await newLink.save()
-      res.status(201).json(newLink)
-   } catch (error) {
-      res.status(409).json({ message: error.message })
-   }
+	try {
+		await newLink.save()
+		res.status(201).json(newLink)
+	} catch (error) {
+		res.status(409).json({ message: error.message })
+	}
 }
 
 export const findOne = async (req, res) => {
 	const { id } = req.params
 	try {
+		if (!mongoose.Types.ObjectId.isValid(id))
+			return res.status(404).send(`No link with id: ${id}`)
+
 		const link = await Link.findById(id)
 		res.status(200).json(link)
 	} catch (error) {

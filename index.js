@@ -3,11 +3,9 @@ import router from './router/index.js'
 import db from './database/index.js'
 
 const app = express()
-const port = 3000
 
-app
-   .use(express.json())
-   .use(router)
-   .listen(port, () => {
-	console.log(`Example app listening at http://localhost:${port}`)
-})
+app.use(express.json())
+	.use(router)
+	.listen(process.env.PORT, () => {
+		console.log(`Listening at http://localhost:${process.env.PORT}`)
+	})

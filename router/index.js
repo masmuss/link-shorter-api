@@ -1,9 +1,19 @@
 import express from 'express'
-import { getAll, create } from '../controllers/LinkController.js'
+import {
+	getAll,
+	create,
+	findOne,
+	update,
+	destroy,
+} from '../controllers/LinkController.js'
 
 const router = express.Router()
 
-router.get('/', getAll)
-router.post('/', create)
+router
+	.get('/links', getAll)
+	.post('/links', create)
+	.get('/links/:id', findOne)
+	.patch('/links/:id', update)
+	.delete('/links/:id', destroy)
 
 export default router
