@@ -34,6 +34,21 @@ export const findOne = async (req, res) => {
 	}
 }
 
+export const getUrl = async (req, res) => {
+	const { shorted_url } = req.params
+	try {
+		const link = await Link.findOne({
+			shorted_url,
+		})
+		if (!link) {
+			return res.status(404).json({ message: 'Link not found' })
+		}
+		res.status(200).json(link)
+	} catch (error) {
+		res.status(404).json({ message: error.message })
+	}
+}
+
 export const update = async (req, res) => {
 	const { id } = req.params
 	const link = req.body
