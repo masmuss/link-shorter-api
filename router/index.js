@@ -11,11 +11,11 @@ import {
 const router = express.Router()
 
 router
-	.get('/links', getAll)
-	.post('/links', create)
-	.get('/links/:id', findOne)
-	.get('/links/url/:shorted_url', getUrl)
-	.patch('/links/:id', update)
-	.delete('/links/:id', destroy)
+	.get('/', getAll)
+	.post('/', create)
+	.get('/:id', findOne)
+	.get('/url/:shorted_url', getUrl)
+	.patch('/:id', update)
+	.delete('/:id', destroy)
 
 export default router
