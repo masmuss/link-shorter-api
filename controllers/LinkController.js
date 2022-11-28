@@ -1,6 +1,13 @@
 import Link from '../models/Link.js'
 import mongoose from 'mongoose'
+import { countVisitor } from '../middleware/CountVisitor.js'
 
+/**
+ * @description Get all links
+ * @route GET /
+ * @returns {Array} links
+ * @throws {Error} 404 - Not found
+ */
 export const getAll = async (req, res) => {
 	try {
 		const links = await Link.find()
@@ -10,6 +17,12 @@ export const getAll = async (req, res) => {
 	}
 }
 
+/**
+ * @description Create a link
+ * @route GET /
+ * @returns {Object} link
+ * @throws {Error} 404 - Not found
+ */
 export const create = async (req, res) => {
 	const link = req.body
 	const newLink = new Link(link)
@@ -21,6 +34,12 @@ export const create = async (req, res) => {
 	}
 }
 
+/**
+ * @description Get a link
+ * @route GET /:id
+ * @returns {Object} link
+ * @throws {Error} 404 - Not found
+ */
 export const findOne = async (req, res) => {
 	const { id } = req.params
 	try {
@@ -34,21 +53,34 @@ export const findOne = async (req, res) => {
 	}
 }
 
-export const getUrl = async (req, res) => {
+/**
+ * @description Get a shorted uri
+ * @route GET /url/:shorted_url
+ * @returns {Object} link
+ * @throws {Error} 404 - Not found
+ */
+export const getShortedUri = async (req, res, next) => {
 	const { shorted_url } = req.params
 	try {
 		const link = await Link.findOne({
 			shorted_url,
 		})
-		if (!link) {
-			return res.status(404).json({ message: 'Link not found' })
-		}
+
+		if (!link) return res.status(404).json({ message: 'Link not found' })
+
+		countVisitor(link)
 		res.status(200).json(link)
 	} catch (error) {
 		res.status(404).json({ message: error.message })
 	}
 }
 
+/**
+ * @description Update a link
+ * @route PATCH /:id
+ * @returns {Object} link
+ * @throws {Error} 404 - Not found
+ */
 export const update = async (req, res) => {
 	const { id } = req.params
 	const link = req.body
@@ -62,6 +94,12 @@ export const update = async (req, res) => {
 	res.json(updated)
 }
 
+/**
+ * @description Delete a link
+ * @route DELETE /:id
+ * @returns {Object} link
+ * @throws {Error} 404 - Not found
+ */
 export const destroy = async (req, res) => {
 	const { id } = req.params
 

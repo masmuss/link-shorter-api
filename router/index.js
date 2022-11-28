@@ -3,7 +3,7 @@ import {
 	getAll,
 	create,
 	findOne,
-	getUrl,
+	getShortedUri,
 	update,
 	destroy,
 } from '../controllers/LinkController.js'
@@ -14,7 +14,7 @@ router
 	.get('/', getAll)
 	.post('/', create)
 	.get('/:id', findOne)
-	.get('/url/:shorted_url', getUrl)
+	.get('/url/:shorted_url', getShortedUri)
 	.patch('/:id', update)
 	.delete('/:id', destroy)
 

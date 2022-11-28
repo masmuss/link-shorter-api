@@ -14,6 +14,7 @@ const link = mongoose.Schema(
 		visitor_count: {
 			type: Number,
 			required: false,
+			default: 0,
 		},
 	},
 	{
